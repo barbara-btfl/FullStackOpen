@@ -43,6 +43,26 @@ const App = () => {
               <Td>bad</Td>
               <Td>{bad}</Td>
             </Tr>
+            <Tr>
+              <Td>all</Td>
+              <Td>{good + neutral + bad}</Td>
+            </Tr>
+            <Tr>
+              <Td>average</Td>
+              <Td>
+                {good + neutral + bad === 0
+                  ? 0
+                  : (good - bad) / (good + neutral + bad)}
+              </Td>
+            </Tr>
+            <Tr>
+              <Td>positive</Td>
+              <Td>
+                {good + neutral + bad === 0
+                  ? "0 %"
+                  : ((good / (good + neutral + bad)) * 100).toFixed(1) + " %"}
+              </Td>
+            </Tr>
           </Tbody>
         </Table>
       </VStack>
