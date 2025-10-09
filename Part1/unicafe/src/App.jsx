@@ -1,17 +1,15 @@
 import { useState } from "react";
 import {
   Heading,
-  Button,
   VStack,
   HStack,
   Text,
-  Box,
   Table,
   Tbody,
   Tr,
   Td,
-  Stat,
 } from "@chakra-ui/react";
+import FeedbackButton from "./FeedbackButton";
 
 export const Statistics = (props) => {
   return (
@@ -72,9 +70,12 @@ export const App = () => {
       <VStack spacing={4} align="center" justify="center" padding={4}>
         <Heading>give feedback</Heading>
         <HStack spacing={8} align="center" justify="center">
-          <Button onClick={() => setGood(good + 1)}>good</Button>
-          <Button onClick={() => setNeutral(neutral + 1)}>neutral</Button>
-          <Button onClick={() => setBad(bad + 1)}>bad</Button>
+          <FeedbackButton onClick={() => setGood(good + 1)} text="good" />
+          <FeedbackButton
+            onClick={() => setNeutral(neutral + 1)}
+            text="neutral"
+          />
+          <FeedbackButton onClick={() => setBad(bad + 1)} text="bad" />
         </HStack>
         <Heading>statistics</Heading>
         {/* Show only if there is feedback given */}
