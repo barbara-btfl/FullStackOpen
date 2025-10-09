@@ -10,9 +10,58 @@ import {
   Tbody,
   Tr,
   Td,
+  Stat,
 } from "@chakra-ui/react";
 
-const App = () => {
+export const Statistics = (props) => {
+  return (
+    <>
+      {/* statistics */}
+      <Table variant="simple" width="auto">
+        <Tbody>
+          <Tr>
+            <Td>good</Td>
+            <Td>{props.good}</Td>
+          </Tr>
+          <Tr>
+            <Td>neutral</Td>
+            <Td>{props.neutral}</Td>
+          </Tr>
+          <Tr>
+            <Td>bad</Td>
+            <Td>{props.bad}</Td>
+          </Tr>
+          <Tr>
+            <Td>all</Td>
+            <Td>{props.good + props.neutral + props.bad}</Td>
+          </Tr>
+          <Tr>
+            <Td>average</Td>
+            <Td>
+              {props.good + props.neutral + props.bad === 0
+                ? 0
+                : (props.good - props.bad) /
+                  (props.good + props.neutral + props.bad)}
+            </Td>
+          </Tr>
+          <Tr>
+            <Td>positive</Td>
+            <Td>
+              {props.good + props.neutral + props.bad === 0
+                ? "0 %"
+                : (
+                    (props.good / (props.good + props.neutral + props.bad)) *
+                    100
+                  ).toFixed(1) + " %"}
+            </Td>
+          </Tr>
+        </Tbody>
+      </Table>
+    </>
+  );
+};
+
+export const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
@@ -28,46 +77,13 @@ const App = () => {
           <Button onClick={() => setBad(bad + 1)}>bad</Button>
         </HStack>
         <Heading>statistics</Heading>
-        {/* statistics */}
-        <Table variant="simple" width="auto">
-          <Tbody>
-            <Tr>
-              <Td>good</Td>
-              <Td>{good}</Td>
-            </Tr>
-            <Tr>
-              <Td>neutral</Td>
-              <Td>{neutral}</Td>
-            </Tr>
-            <Tr>
-              <Td>bad</Td>
-              <Td>{bad}</Td>
-            </Tr>
-            <Tr>
-              <Td>all</Td>
-              <Td>{good + neutral + bad}</Td>
-            </Tr>
-            <Tr>
-              <Td>average</Td>
-              <Td>
-                {good + neutral + bad === 0
-                  ? 0
-                  : (good - bad) / (good + neutral + bad)}
-              </Td>
-            </Tr>
-            <Tr>
-              <Td>positive</Td>
-              <Td>
-                {good + neutral + bad === 0
-                  ? "0 %"
-                  : ((good / (good + neutral + bad)) * 100).toFixed(1) + " %"}
-              </Td>
-            </Tr>
-          </Tbody>
-        </Table>
+        {/* Show only if there is feedback given */}
+        {good + neutral + bad > 0 ? (
+          <Statistics good={good} neutral={neutral} bad={bad} />
+        ) : (
+          <Text>No feedback given</Text>
+        )}
       </VStack>
     </>
   );
 };
-
-export default App;
