@@ -17,7 +17,16 @@ const App = () => {
     "The only way to go fast, is to go well.",
   ];
 
+  // create an empty array to hold votes for each anecdote in state
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
   const [selected, setSelected] = useState(0);
+
+  // create a click function that increases the vote count for the selected anecdote
+  const handleVote = () => {
+    const newVotes = [...votes]; // create a copy of the votes array
+    newVotes[selected] += 1; // increase the vote for the selected anecdote
+    setVotes(newVotes); // update the state
+  };
   //  use the helper function to get a random index of the anecdotes array
   const handleClick = () => {
     const randomIndex = getRandomIndex(anecdotes);
@@ -25,7 +34,10 @@ const App = () => {
   };
   return (
     <>
+      <h1>Anecdote of the day</h1>
       <div>{anecdotes[selected]}</div>
+      <div>has {votes[selected]} votes</div>
+      <button onClick={handleVote}>vote</button>
       {/* Button that shows random quote when clicked using the handleClick function */}
       <button onClick={handleClick}>next anecdote</button>
     </>
