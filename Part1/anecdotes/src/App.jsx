@@ -40,6 +40,9 @@ const App = () => {
       <button onClick={handleVote}>vote</button>
       {/* Button that shows random quote when clicked using the handleClick function */}
       <button onClick={handleClick}>next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      <div>{anecdotes[votes.indexOf(Math.max(...votes))]}</div>
+      <div>has {Math.max(...votes)} votes</div>
     </>
   );
 };
