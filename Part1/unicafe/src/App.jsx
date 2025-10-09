@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import {
+  Heading,
+  Button,
+  VStack,
+  HStack,
+  Text,
+  Box,
+  Table,
+  Tbody,
+  Tr,
+  Td,
+} from "@chakra-ui/react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  // save clicks of each button to its own state
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <VStack spacing={4} align="center" justify="center" padding={4}>
+        <Heading>give feedback</Heading>
+        <HStack spacing={8} align="center" justify="center">
+          <Button onClick={() => setGood(good + 1)}>good</Button>
+          <Button onClick={() => setNeutral(neutral + 1)}>neutral</Button>
+          <Button onClick={() => setBad(bad + 1)}>bad</Button>
+        </HStack>
+        <Heading>statistics</Heading>
+        {/* statistics */}
+        <Table variant="simple" width="auto">
+          <Tbody>
+            <Tr>
+              <Td>good</Td>
+              <Td>{good}</Td>
+            </Tr>
+            <Tr>
+              <Td>neutral</Td>
+              <Td>{neutral}</Td>
+            </Tr>
+            <Tr>
+              <Td>bad</Td>
+              <Td>{bad}</Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </VStack>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
