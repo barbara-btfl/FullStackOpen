@@ -1,58 +1,25 @@
 import { useState } from "react";
-import {
-  Heading,
-  VStack,
-  HStack,
-  Text,
-  Table,
-  Tbody,
-  Tr,
-  Td,
-} from "@chakra-ui/react";
+import { Heading, VStack, HStack, Text, Table, Tbody } from "@chakra-ui/react";
 import FeedbackButton from "./FeedbackButton";
+import StatisticLine from "./StatisticLine";
 
 export const Statistics = (props) => {
+  const { good, neutral, bad } = props;
+  const all = good + neutral + bad;
+  const average = all === 0 ? 0 : (good - bad) / all;
+  const positive = all === 0 ? "0 %" : ((good / all) * 100).toFixed(1) + " %";
+
   return (
     <>
       {/* statistics */}
       <Table variant="simple" width="auto">
         <Tbody>
-          <Tr>
-            <Td>good</Td>
-            <Td>{props.good}</Td>
-          </Tr>
-          <Tr>
-            <Td>neutral</Td>
-            <Td>{props.neutral}</Td>
-          </Tr>
-          <Tr>
-            <Td>bad</Td>
-            <Td>{props.bad}</Td>
-          </Tr>
-          <Tr>
-            <Td>all</Td>
-            <Td>{props.good + props.neutral + props.bad}</Td>
-          </Tr>
-          <Tr>
-            <Td>average</Td>
-            <Td>
-              {props.good + props.neutral + props.bad === 0
-                ? 0
-                : (props.good - props.bad) /
-                  (props.good + props.neutral + props.bad)}
-            </Td>
-          </Tr>
-          <Tr>
-            <Td>positive</Td>
-            <Td>
-              {props.good + props.neutral + props.bad === 0
-                ? "0 %"
-                : (
-                    (props.good / (props.good + props.neutral + props.bad)) *
-                    100
-                  ).toFixed(1) + " %"}
-            </Td>
-          </Tr>
+          <StatisticLine text="good" value={good} />
+          <StatisticLine text="neutral" value={neutral} />
+          <StatisticLine text="bad" value={bad} />
+          <StatisticLine text="all" value={all} />
+          <StatisticLine text="average" value={average} />
+          <StatisticLine text="positive" value={positive} />
         </Tbody>
       </Table>
     </>
