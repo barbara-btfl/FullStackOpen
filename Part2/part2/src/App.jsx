@@ -20,6 +20,16 @@ const App = () => {
         exercises: 14,
         id: 3,
       },
+      {
+        name: "Redux",
+        exercises: 11,
+        id: 4,
+      },
+      {
+        name: "Testing React apps",
+        exercises: 7,
+        id: 5,
+      },
     ],
   };
 
