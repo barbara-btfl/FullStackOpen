@@ -3,5 +3,9 @@ export const Total = (props) => {
     (sum, part) => sum + part.exercises,
     0
   );
-  return <p>Number of exercises {totalExercises}</p>;
+  return (
+    <p>
+      <b>Number of exercises {totalExercises}</b>
+    </p>
+  );
 };
