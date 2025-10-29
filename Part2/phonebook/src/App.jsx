@@ -1,4 +1,7 @@
 import { useState } from "react";
+import Filter from "./components/Filter";
+import PersonForm from "./components/PersonForm";
+import Persons from "./components/Persons";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -16,6 +19,7 @@ const App = () => {
     const personObject = {
       name: newName,
       number: newNumber,
+      id: persons.length + 1, // Add id for new persons
     };
 
     setPersons(persons.concat(personObject));
@@ -25,68 +29,23 @@ const App = () => {
     console.log("button clicked", event.target);
   };
 
-  // Check if {newName} already exists
-  const checkDuplicate = (name) => {
-    return persons.some((person) => person.name === name);
-  };
-
-  // Filter persons based on input
-  const filteredPersons = persons.filter((person) =>
-    person.name.toLowerCase().includes(filter.toLowerCase())
-  );
-
   return (
-    <>
-      <div>
-        <h2>Phonebook</h2>
-        <div>
-          Filter shown with:{" "}
-          <input value={filter} onChange={(e) => setFilter(e.target.value)} />
-        </div>
-        <h2>Add a new</h2>
-        <form onSubmit={addPerson}>
-          <div>
-            name:{" "}
-            <input
-              value={newName}
-              // Check for duplicates on change
-              onChange={(e) => {
-                setNewName(e.target.value);
-                if (checkDuplicate(e.target.value)) {
-                  alert(`${e.target.value} is already in the phonebook`);
-                }
-              }}
-            />
-          </div>
-          <div>
-            number:{" "}
-            <input
-              value={newNumber}
-              // Check if number is only using numbers and dashes
-              onChange={(e) => {
-                const value = e.target.value;
-                if (/^[0-9-]*$/.test(value)) {
-                  setNewNumber(value);
-                } else {
-                  alert("Invalid number format");
-                }
-              }}
-            />
-          </div>
-          <div>
-            <button type="submit">add</button>
-          </div>
-        </form>
-        <h2>Numbers</h2>
-        <ul>
-          {filteredPersons.map((person) => (
-            <li key={person.id}>
-              {person.name} {person.number}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </>
+    <div>
+      <h2>Phonebook</h2>
+
+      <Filter filter={filter} onFilterChange={setFilter} />
+
+      <PersonForm
+        newName={newName}
+        newNumber={newNumber}
+        onNameChange={setNewName}
+        onNumberChange={setNewNumber}
+        onSubmit={addPerson}
+        persons={persons}
+      />
+
+      <Persons persons={persons} filter={filter} />
+    </div>
   );
 };
 
