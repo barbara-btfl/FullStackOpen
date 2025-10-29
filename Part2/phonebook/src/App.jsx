@@ -16,6 +16,11 @@ const App = () => {
     console.log("button clicked", event.target);
   };
 
+  // Check if {newName} already exists
+  const checkDuplicate = (name) => {
+    return persons.some((person) => person.name === name);
+  };
+
   return (
     <>
       <div>
@@ -25,7 +30,13 @@ const App = () => {
             name:{" "}
             <input
               value={newName}
-              onChange={(e) => setNewName(e.target.value)}
+              // Check for duplicates on change
+              onChange={(e) => {
+                setNewName(e.target.value);
+                if (checkDuplicate(e.target.value)) {
+                  alert(`${e.target.value} is already in the phonebook`);
+                }
+              }}
             />
           </div>
           <div>
