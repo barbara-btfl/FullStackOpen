@@ -31,6 +31,20 @@ const App = () => {
     });
   };
 
+  const deletePerson = (id, name) => {
+    if (window.confirm(`Delete ${name}?`)) {
+      personService
+        .remove(id)
+        .then(() => {
+          setPersons(persons.filter((person) => person.id !== id));
+        })
+        .catch(() => {
+          alert(`The person '${name}' was already deleted from server`);
+          setPersons(persons.filter((person) => person.id !== id));
+        });
+    }
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -46,7 +60,7 @@ const App = () => {
         persons={persons}
       />
 
-      <Persons persons={persons} filter={filter} />
+      <Persons persons={persons} filter={filter} onDelete={deletePerson} />
     </div>
   );
 };
