@@ -4,21 +4,10 @@ const PersonForm = ({
   onNameChange,
   onNumberChange,
   onSubmit,
-  persons,
 }) => {
-  // Check if {newName} already exists
-  const checkDuplicate = (name) => {
-    return persons.some((person) => person.name === name);
-  };
-
   const handleNameChange = (e) => {
     const value = e.target.value;
     onNameChange(value);
-
-    // Check for duplicates on change
-    if (checkDuplicate(value)) {
-      alert(`${value} is already in the phonebook`);
-    }
   };
 
   const handleNumberChange = (e) => {

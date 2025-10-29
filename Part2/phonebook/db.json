@@ -2,7 +2,7 @@
   "persons": [
     {
       "name": "Arto Hellas",
-      "number": "040-123456",
+      "number": "010-1234567",
       "id": "1"
     },
     {
@@ -12,7 +12,7 @@
     },
     {
       "name": "Dan Abramov",
-      "number": "12-43-234345",
+      "number": "78-45-123456",
       "id": "3"
     },
     {
@@ -23,7 +23,7 @@
     {
       "name": "Martin Fowler",
       "number": "0103692581",
-      "id": 5
+      "id": "5"
     }
   ]
 }

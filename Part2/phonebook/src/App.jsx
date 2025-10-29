@@ -16,21 +16,6 @@ const App = () => {
     });
   }, []);
 
-  const addPerson = (event) => {
-    event.preventDefault();
-    const personObject = {
-      name: newName,
-      number: newNumber,
-      id: persons.length + 1, // Add id for new persons
-    };
-
-    personService.create(personObject).then((returnedPerson) => {
-      setPersons(persons.concat(returnedPerson));
-      setNewName("");
-      setNewNumber("");
-    });
-  };
-
   const deletePerson = (id, name) => {
     if (window.confirm(`Delete ${name}?`)) {
       personService
@@ -42,6 +27,38 @@ const App = () => {
           alert(`The person '${name}' was already deleted from server`);
           setPersons(persons.filter((person) => person.id !== id));
         });
+    }
+  };
+
+  const addPerson = (event) => {
+    event.preventDefault();
+
+    const existingPerson = persons.find((person) => person.name === newName);
+    if (existingPerson) {
+      if (window.confirm(`Update ${newName}'s number to ${newNumber}?`)) {
+        personService
+          .update(existingPerson.id, { name: newName, number: newNumber })
+          .then((returnedPerson) => {
+            setPersons(
+              persons.map((person) =>
+                person.id === existingPerson.id ? returnedPerson : person
+              )
+            );
+            setNewName("");
+            setNewNumber("");
+          });
+      }
+    } else {
+      const personObject = {
+        name: newName,
+        number: newNumber,
+      };
+
+      personService.create(personObject).then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNewNumber("");
+      });
     }
   };
 
