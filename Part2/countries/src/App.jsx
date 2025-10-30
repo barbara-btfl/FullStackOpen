@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import Filter from "./components/Filter.jsx";
+import countryService from "./services/countries.js";
+import Countries from "./Countries.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [countries, setCountries] = useState([]);
+  const [filter, setFilter] = useState("");
+
+  useEffect(() => {
+    console.log("Fetching countries data...");
+    countryService
+      .getAll()
+      .then((initialCountries) => {
+        console.log("Countries loaded:", initialCountries.length);
+        setCountries(initialCountries);
+      })
+      .catch((error) => {
+        console.error("Error fetching countries:", error);
+        alert("Failed to load countries data");
+      });
+  }, []);
 
   return (
     <>
+      <Filter filter={filter} onFilterChange={setFilter} />
+      <Countries countries={countries} filter={filter} />
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
         <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+          Data from{" "}
+          <a href="https://studies.cs.helsinki.fi/restcountries/">
+            https://studies.cs.helsinki.fi/restcountries/
+          </a>
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
