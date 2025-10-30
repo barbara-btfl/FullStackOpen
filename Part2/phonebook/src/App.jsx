@@ -31,9 +31,7 @@ const App = () => {
           }, 5000);
         })
         .catch(() => {
-          setErrorMessage(
-            `The person '${name}' was already deleted from server`
-          );
+          setErrorMessage(`${name} is already removed from server`);
           setTimeout(() => {
             setErrorMessage(null);
           }, 5000);
@@ -63,8 +61,17 @@ const App = () => {
             setNewName("");
             setNewNumber("");
           })
-          .catch(() => {
-            setErrorMessage(`Failed to update ${newName}'s information`);
+          .catch((error) => {
+            // Check if it's a 404 error (person already removed from server)
+            if (error.response && error.response.status === 404) {
+              setErrorMessage(`${newName} is already removed from server`);
+              // Remove the person from local state since it doesn't exist on server
+              setPersons(
+                persons.filter((person) => person.id !== existingPerson.id)
+              );
+            } else {
+              setErrorMessage(`Failed to update ${newName}'s information`);
+            }
             setTimeout(() => {
               setErrorMessage(null);
             }, 5000);
