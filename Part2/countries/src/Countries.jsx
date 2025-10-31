@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 const Countries = ({ countries, filter }) => {
+  const [selectedCountry, setSelectedCountry] = useState(null);
+
   // Guard clause: return early if no countries data or no filter
   if (!countries || countries.length === 0) {
     return <div>Loading countries...</div>;
@@ -17,6 +21,30 @@ const Countries = ({ countries, filter }) => {
     `Filter: "${filter}", Found: ${filteredCountries.length} countries`
   );
 
+  // Helper function to render country details
+  const renderCountryDetails = (country) => (
+    <div>
+      <h3>{country.name.common}</h3>
+      <p>Capital: {country.capital?.[0] || "N/A"}</p>
+      <p>Area: {country.area || "N/A"}</p>
+      <h4>Languages:</h4>
+      <ul>
+        {country.languages ? (
+          Object.values(country.languages).map((language) => (
+            <li key={language}>{language}</li>
+          ))
+        ) : (
+          <li>No language data available</li>
+        )}
+      </ul>
+      <img
+        src={country.flags?.png}
+        alt={`Flag of ${country.name.common}`}
+        width="200"
+      />
+    </div>
+  );
+
   return (
     <>
       <h2>Countries</h2>
@@ -24,36 +52,38 @@ const Countries = ({ countries, filter }) => {
       {filteredCountries.length > 10 ? (
         <p>Too many matches, specify another filter</p>
       ) : filteredCountries.length === 1 ? (
-        <div>
-          <h3>{filteredCountries[0].name.common}</h3>
-          <p>Capital: {filteredCountries[0].capital?.[0] || "N/A"}</p>
-          <p>Area: {filteredCountries[0].area || "N/A"}</p>
-          <h4>Languages:</h4>
-          <ul>
-            {filteredCountries[0].languages ? (
-              Object.values(filteredCountries[0].languages).map((language) => (
-                <li key={language}>{language}</li>
-              ))
-            ) : (
-              <li>No language data available</li>
-            )}
-          </ul>
-          <img
-            src={filteredCountries[0].flags?.png}
-            alt={`Flag of ${filteredCountries[0].name.common}`}
-            width="200"
-          />
-        </div>
+        renderCountryDetails(filteredCountries[0])
       ) : filteredCountries.length === 0 ? (
         <p>No matches found</p>
       ) : (
-        <ul>
-          {filteredCountries.map((country) => (
-            <li key={country.cca3 || country.name.common}>
-              {country.name.common}
-            </li>
-          ))}
-        </ul>
+        <div>
+          <ul>
+            {filteredCountries.map((country) => (
+              <li key={country.cca3 || country.name.common}>
+                {country.name.common}
+                <button
+                  onClick={() => setSelectedCountry(country)}
+                  style={{ marginLeft: "10px" }}
+                >
+                  show
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          {/* Show selected country details */}
+          {selectedCountry && (
+            <div>
+              <button
+                onClick={() => setSelectedCountry(null)}
+                style={{ marginBottom: "10px" }}
+              >
+                Hide details
+              </button>
+              {renderCountryDetails(selectedCountry)}
+            </div>
+          )}
+        </div>
       )}
     </>
   );
