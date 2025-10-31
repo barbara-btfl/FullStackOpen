@@ -18,14 +18,10 @@ export const Weather = ({ country }) => {
 
     const lat = country.latlng[0];
     const lon = country.latlng[1];
-    const capital = country.capital?.[0] || country.name.common;
-
-    console.log(`Fetching weather for ${capital} (${lat}, ${lon})`);
 
     weatherService
       .getWeather(lat, lon)
       .then((data) => {
-        console.log("Weather data received:", data);
         setWeatherData(data);
         setLoading(false);
       })

@@ -18,10 +18,6 @@ const Countries = ({ countries, filter }) => {
     return country?.name?.common?.toLowerCase().includes(filter.toLowerCase());
   });
 
-  console.log(
-    `Filter: "${filter}", Found: ${filteredCountries.length} countries`
-  );
-
   // Helper function to render country details
   const renderCountryDetails = (country) => (
     <div>

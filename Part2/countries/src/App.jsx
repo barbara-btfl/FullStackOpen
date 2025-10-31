@@ -8,11 +8,9 @@ function App() {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    console.log("Fetching countries data...");
     countryService
       .getAll()
       .then((initialCountries) => {
-        console.log("Countries loaded:", initialCountries.length);
         setCountries(initialCountries);
       })
       .catch((error) => {
