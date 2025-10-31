@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Weather } from "./components/Weather";
 
 const Countries = ({ countries, filter }) => {
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -42,6 +43,9 @@ const Countries = ({ countries, filter }) => {
         alt={`Flag of ${country.name.common}`}
         width="200"
       />
+
+      {/* Weather component */}
+      <Weather country={country} />
     </div>
   );
 
