@@ -11,6 +11,7 @@
   "author": "Barbara Peters",
   "license": "MIT",
   "dependencies": {
+    "express": "^5.1.0",
     "morgan": "^1.10.1"
   }
 }
