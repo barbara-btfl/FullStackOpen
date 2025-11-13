@@ -1,6 +1,36 @@
 const express = require("express");
 const app = express();
 
+const mongoose = require("mongoose");
+
+if (process.argv.length < 3) {
+  console.log("give password as argument");
+  process.exit(1);
+}
+
+const password = process.argv[2];
+
+const url = `mongodb+srv://barbara_db_user:${password}@cluster0.3tectd9.mongodb.net/noteApp?retryWrites=true&w=majority&appName=Cluster0`;
+
+mongoose.set("strictQuery", false);
+
+mongoose.connect(url, { family: 4 });
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  important: Boolean,
+});
+
+noteSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
+
+const Note = mongoose.model("Note", noteSchema);
+
 app.use(express.json());
 app.use(express.static("dist"));
 
@@ -33,7 +63,9 @@ const requestLogger = (request, response, next) => {
 app.use(requestLogger);
 
 app.get("/api/notes", (request, response) => {
-  response.json(notes);
+  Note.find({}).then((notes) => {
+    response.json(notes);
+  });
 });
 
 app.get("/api/notes/:id", (request, response) => {
