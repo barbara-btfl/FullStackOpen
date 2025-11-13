@@ -10,6 +10,9 @@ Thumbs.db
 # Node modules
 node_modules/
 
+# dotenv environment variables file
+.env
+
 # Logs
 logs
 *.log
