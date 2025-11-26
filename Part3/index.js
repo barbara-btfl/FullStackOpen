@@ -14,9 +14,9 @@ const requestLogger = (request, response, next) => {
   next();
 };
 
-app.use(requestLogger);
 app.use(express.static("dist"));
 app.use(express.json());
+app.use(requestLogger);
 
 app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
