@@ -1,0 +1,9 @@
+
+### Update with existing person ID (replace with real ID)
+PUT http://localhost:3001/api/persons/674567a2b123456789abcdef
+Content-Type: application/json
+
+{
+  "name": "John Doe Updated",
+  "number": "555-123-4567"
+}
