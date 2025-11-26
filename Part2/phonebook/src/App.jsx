@@ -94,8 +94,8 @@ const App = () => {
           setNewName("");
           setNewNumber("");
         })
-        .catch(() => {
-          setErrorMessage(`Failed to add ${newName}`);
+        .catch((error) => {
+          setErrorMessage(error.response.data.error);
           setTimeout(() => {
             setErrorMessage(null);
           }, 5000);
