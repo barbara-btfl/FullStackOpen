@@ -1,0 +1,6 @@
+{
+  "eslint.workingDirectories": ["./Part2/phonebook", "./Part3/phonebook"],
+  "eslint.options": {
+    "overrideConfigFile": null
+  }
+}
